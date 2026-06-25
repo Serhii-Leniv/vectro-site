@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Vectro — run your AI coding agents in parallel</title>
+    <meta
+      name="description"
+      content="Vectro is a desktop canvas that runs multiple AI coding agents in parallel — each isolated in its own git worktree, with one-click diff & merge."
+    />
+    <link rel="icon" href="icon.png" />
+    <meta property="og:title" content="Vectro" />
+    <meta
+      property="og:description"
+      content="Run your AI coding agents in parallel — isolated git worktrees, one-click diff & merge."
+    />
+    <meta property="og:image" content="icon.png" />
+    <style>
+      :root {
+        --accent-rgb: 59, 91, 217;
+        --accent: rgb(var(--accent-rgb));
+        --accent-2: #5a78ef;
+        --text: rgba(255, 255, 255, 0.95);
+        --muted: rgba(235, 235, 245, 0.55);
+        --line: rgba(255, 255, 255, 0.12);
+        --glass: rgba(255, 255, 255, 0.04);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+      }
+      body {
+        font-family: -apple-system, 'Segoe UI', system-ui, sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(1100px 700px at 50% -10%, rgba(var(--accent-rgb), 0.22), transparent 60%),
+          radial-gradient(900px 600px at 85% 20%, rgba(90, 120, 239, 0.12), transparent 55%),
+          linear-gradient(180deg, #0a0c12, #07090d);
+        min-height: 100vh;
+        -webkit-font-smoothing: antialiased;
+      }
+      .wrap {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+      header {
+        padding: 64px 0 28px;
+        text-align: center;
+      }
+      .mark {
+        width: 132px;
+        height: 132px;
+        object-fit: contain;
+        filter: drop-shadow(0 0 38px rgba(var(--accent-rgb), 0.55));
+        animation: float 6s ease-in-out infinite;
+      }
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-9px);
+        }
+      }
+      h1 {
+        font-size: clamp(40px, 7vw, 64px);
+        letter-spacing: -0.02em;
+        margin: 18px 0 10px;
+        font-weight: 700;
+      }
+      .tag {
+        font-size: clamp(16px, 2.4vw, 21px);
+        color: var(--muted);
+        max-width: 620px;
+        margin: 0 auto;
+        line-height: 1.5;
+      }
+      .downloads {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        justify-content: center;
+        margin: 36px 0 12px;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        padding: 14px 22px;
+        border-radius: 13px;
+        font-size: 15px;
+        font-weight: 600;
+        text-decoration: none;
+        color: var(--text);
+        background: var(--glass);
+        border: 1px solid var(--line);
+        transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+      }
+      .btn:hover {
+        transform: translateY(-2px);
+        background: rgba(255, 255, 255, 0.08);
+      }
+      .btn--primary {
+        color: #fff;
+        background: linear-gradient(180deg, var(--accent-2), var(--accent));
+        border-color: rgba(255, 255, 255, 0.25);
+        box-shadow:
+          0 0 26px rgba(var(--accent-rgb), 0.6),
+          0 8px 24px rgba(var(--accent-rgb), 0.35);
+      }
+      .btn--primary:hover {
+        filter: brightness(1.07);
+      }
+      .btn svg {
+        width: 18px;
+        height: 18px;
+      }
+      .note {
+        text-align: center;
+        color: var(--muted);
+        font-size: 13px;
+        margin-top: 8px;
+      }
+      .note code {
+        color: var(--text);
+        background: rgba(255, 255, 255, 0.07);
+        padding: 1px 6px;
+        border-radius: 5px;
+        font-size: 12px;
+      }
+      .features {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 14px;
+        margin: 64px 0;
+      }
+      .card {
+        padding: 22px;
+        border-radius: 16px;
+        background: var(--glass);
+        border: 1px solid var(--line);
+        backdrop-filter: blur(14px);
+      }
+      .card h3 {
+        margin: 0 0 8px;
+        font-size: 16px;
+      }
+      .card p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.55;
+      }
+      .dot {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: var(--accent);
+        box-shadow: 0 0 10px var(--accent);
+        display: inline-block;
+        margin-right: 8px;
+      }
+      footer {
+        text-align: center;
+        color: var(--muted);
+        font-size: 13px;
+        padding: 28px 0 56px;
+        border-top: 1px solid var(--line);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <img class="mark" src="logo.png" alt="Vectro" />
+        <h1>Vectro</h1>
+        <p class="tag">
+          Run your AI coding agents in parallel — each isolated in its own git worktree, with
+          one-click diff &amp; merge. Bring your own CLIs.
+        </p>
+
+        <div class="downloads">
+          <a class="btn btn--primary" href="https://github.com/Serhii-Leniv/vectro-site/releases/latest/download/Vectro-macOS-arm64.dmg">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.4 1.6c.1 1-.3 2-.9 2.7-.6.8-1.6 1.4-2.6 1.3-.1-1 .4-2 .9-2.6.6-.8 1.7-1.3 2.6-1.4zM19 17.3c-.5 1.1-.7 1.6-1.3 2.6-.9 1.4-2.1 3.1-3.6 3.1-1.3 0-1.7-.8-3.4-.8-1.8 0-2.2.8-3.5.9-1.5 0-2.6-1.5-3.5-2.9C-.1 16.6-.6 11 1.6 8c1-1.4 2.6-2.3 4.1-2.3 1.5 0 2.5.9 3.7.9 1.2 0 1.9-.9 3.7-.9 1.3 0 2.7.7 3.7 2-3.2 1.7-2.7 6.2.5 7.6z"/></svg>
+            Download for Mac
+            <span style="opacity:.7;font-weight:500">Apple Silicon</span>
+          </a>
+          <a class="btn" href="https://github.com/Serhii-Leniv/vectro-site/releases/latest/download/Vectro-macOS-Intel.dmg">Mac · Intel</a>
+          <a class="btn" href="https://github.com/Serhii-Leniv/vectro-site/releases/latest/download/Vectro-Windows-Setup.exe">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 5.5 11 4.3v7.4H3V5.5zm0 13L11 19.7v-7.2H3v6zm9-14.4L21 3v8.7h-9V4.1zm0 8.4h9V21l-9-1.4v-7.1z"/></svg>
+            Windows
+          </a>
+        </div>
+        <p class="note">
+          Free · the app spawns your already-installed agent CLIs (Claude Code, Codex, Gemini…).<br />
+          Unsigned build — on first launch <b>right-click → Open</b> (macOS) / <b>More info → Run anyway</b> (Windows).
+        </p>
+      </header>
+
+      <section class="features">
+        <div class="card">
+          <h3><span class="dot"></span>Agents in parallel</h3>
+          <p>A tiled canvas of live terminals. Run several coding agents at once and see who's working, idle, or waiting on you at a glance.</p>
+        </div>
+        <div class="card">
+          <h3><span class="dot"></span>Git-worktree isolation</h3>
+          <p>Every agent gets its own branch + worktree, so parallel edits never clobber each other.</p>
+        </div>
+        <div class="card">
+          <h3><span class="dot"></span>One-click diff &amp; merge</h3>
+          <p>Review each agent's changes in-app and merge into your base branch — or discard — without leaving the canvas.</p>
+        </div>
+        <div class="card">
+          <h3><span class="dot"></span>Make it yours</h3>
+          <p>Liquid-glass UI with your own accent colour, wallpaper, and adjustable terminal transparency.</p>
+        </div>
+      </section>
+
+      <footer>Built by Serhii Leniv · BYO agents, your machine, your repo.</footer>
+    </div>
+  </body>
+</html>
